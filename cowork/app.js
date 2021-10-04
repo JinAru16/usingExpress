@@ -4,6 +4,8 @@ const app = express(); // express로 만든 객체는 app이라고 관습적으�
 
 const members = require('./members');
 
+app.use(express.json()); // request가 rout handller에게 처리되기 전에 필요한 전처리를 하는 함수를 express에서는 미들웨어라고 함
+
 app.get('/api/members', (req, res) =>{
     const { team } = req.query;
     if (team) {
@@ -24,7 +26,14 @@ app.get('/api/members/:id', (req, res) =>{
     }
 });
 
+app.post('/api/members', (req, res) => {
+    const newMember = req.body;
+    members.push(newMember);
+    res.send(newMember);
+});
+
+
 
 app.listen(3000, () => {
     console.log('Server is listening...');
-});
+}); 
