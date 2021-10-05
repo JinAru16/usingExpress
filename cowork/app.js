@@ -19,6 +19,13 @@ app.get('/api/members', (req, res) =>{
 app.get('/api/members/:id', (req, res) =>{
     const { id } = req.params;
     const member = members.find((m) => m.id === Number(id));
+    /*
+    여기서 m이 뭐냐면 객체에서 a: x, b : y, 이런식으로 하잖슴? 여기서 a, b 즉 키를 의미함.
+    키 중에서 id가 있을거잖아. :id 자리에 써준 숫자랑 (그게 Number(id)로 표기됨)
+    members에 있는 id랑 같으면 True를 리턴하게 함.
+    */
+
+    
     if (member) {
         res.send(member);
     } else {
@@ -29,11 +36,12 @@ app.get('/api/members/:id', (req, res) =>{
 app.post('/api/members', (req, res) => {
     const newMember = req.body;
     members.push(newMember);
-    res.send(newMember);
+    re.send(newMember);
 });
 
 
 
 app.listen(3000, () => {
     console.log('Server is listening...');
+    
 }); 
