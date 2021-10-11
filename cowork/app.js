@@ -2,11 +2,7 @@ const express = require('express');
 
 const app = express(); // express로 만든 객체는 app이라고 관습적으로 이름을 붙임
 
-const db = require('./models');
-/* nodejs에서는 모듈을 검색할때  특정 디렉토리의 이름만 적으면 해당 디렉토리에 존재하는 index.js파일을 자동으로 찾음. 그래서 ./models/index.js 대신에
-./models만 적어줘도 됨 */
-
-const { Member } = db;
+let members = require('./members');
 
 app.use(express.json()); // request가 rout handller에게 처리되기 전에 필요한 전처리를 하는 함수를 express에서는 미들웨어라고 함
 
