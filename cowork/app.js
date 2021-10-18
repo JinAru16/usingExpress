@@ -8,16 +8,17 @@ const { Member } = db;
 
 app.use(express.json()); // request가 rout handller에게 처리되기 전에 필요한 전처리를 하는 함수를 express에서는 미들웨어라고 함
 
-app.get('/api/members', (req, res) =>{
+app.get('/api/members', async (req, res) =>{
     const { team } = req.query;
     if (team) {
-        const teamMembers = members.filter((m) => m.team === team);
+        const teamMembers = await Member.findAll({ where: { team } });
         res.send(teamMembers);
     } else {
+        const members = await Member.findAll();
         res.send(members);
     }
 });
-
+ 
 
 
 // 회원 정보를 찾는 메소드
@@ -37,7 +38,7 @@ app.get('/api/members/:id', (req, res) =>{
         그 트루로 나타난 객체를 내보내란 소리임.
         */
 
-    } else {
+    } else { 
         res.status(404).send({message:'There is no member with the id!!'});
     }
 });
