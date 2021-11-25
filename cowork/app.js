@@ -22,9 +22,9 @@ app.get('/api/members', async (req, res) =>{
 
 
 // 회원 정보를 찾는 메소드
-app.get('/api/members/:id', (req, res) =>{
+app.get('/api/members/:id', async(req, res) =>{
     const { id } = req.params;
-    const member = members.find((m) => m.id === Number(id));
+    const member = await Member.findOne({ where: {id}} );
     /*
     여기서 m이 뭐냐면 객체에서 a: x, b : y, 이런식으로 하잖슴? 여기서 a, b 즉 키를 의미함.
     키 중에서 id가 있을거잖아. :id 자리에 써준 숫자랑 (그게 Number(id)로 표기됨)
@@ -43,10 +43,11 @@ app.get('/api/members/:id', (req, res) =>{
     }
 });
 
-app.post('/api/members', (req, res) => {
+app.post('/api/members', async (req, res) => {
     const newMember = req.body;
-    members.push(newMember);
-    res.send(newMember);
+    const member = Member.build(newMember);
+    await member.save();
+    res.send(member);
 });
 
 
